@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+
 import requests
 import time
+import sys
 
 from keys import slacktoken
 
@@ -10,6 +13,9 @@ getmessages = 'https://slack.com/api/channels.history?token=%s&channel=C02KTPE68
 def pollmessages():
     r = requests.get(getmessages, timeout=3.05)
     r.raise_for_status()
+    if len(r.json()['messages']) < 1:
+        print 'No messages to cull'
+        sys.exit()
     for messageindex, message in enumerate(r.json()['messages']):                            
         #print messagei                                                                      
         print messageindex,                                                                  
