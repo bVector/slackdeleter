@@ -4,6 +4,8 @@ import requests
 import time
 import sys
 
+print time.ctime()
+
 from keys import slacktoken
 
 dayago = time.time() - 86400
@@ -21,8 +23,10 @@ def pollmessages():
         print messageindex,                                                                  
         try:                                                                                 
             print '     deleting', message['username'], message['text'], 'at', message['ts'] 
-        except KeyError:                                                                     
-            print ' -   deleting',  message                                                  
+        except KeyError:                                                                    
+            print ' -   deleting',  message                                                 
+        except UnicodeEncodeError:
+            pass
         delete_message(message['ts'])                                                        
         time.sleep(0.65)
 
